@@ -82,7 +82,7 @@ export default function App() {
   const uploadFiles = async () => {
     const formData = new FormData();
     files.forEach(f => formData.append('files', f.fileObj));
-    const res = await fetch('http://localhost:3000/upload', {
+    const res = await fetch('/upload', {
       method: 'POST',
       body: formData
     });
@@ -101,7 +101,7 @@ export default function App() {
       const uploadData = await uploadFiles();
       const filePaths = uploadData.files.map(f => f.path);
       
-      const res = await fetch('http://localhost:3000/convert', {
+      const res = await fetch('/convert', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -114,7 +114,7 @@ export default function App() {
       const data = await res.json();
       if (data.success) {
         data.results.forEach(r => {
-          if(r.success) window.location.href = `http://localhost:3000${r.outputPath}`;
+          if(r.success) window.location.href = `${r.outputPath}`;
         });
       } else {
         alert('Conversion failed.');
@@ -137,7 +137,7 @@ export default function App() {
       const uploadData = await uploadFiles();
       const filePaths = uploadData.files.map(f => f.path);
       
-      const res = await fetch('http://localhost:3000/merge', {
+      const res = await fetch('/merge', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -149,7 +149,7 @@ export default function App() {
       
       const data = await res.json();
       if (data.success) {
-        window.location.href = `http://localhost:3000${data.outputPath}`;
+        window.location.href = `${data.outputPath}`;
       } else {
         alert('Merge failed.');
       }

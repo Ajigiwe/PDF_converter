@@ -19,6 +19,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the React frontend
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
 // Storage configuration
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
@@ -287,7 +290,8 @@ function convertFile(inputPath, outputPath, outputFormat, options) {
       '--margins', options?.margins || '1'
     ];
     
-    const python = spawn('python', args, { shell: true });
+    const pythonCmd = process.env.PYTHON_PATH || 'python';
+    const python = spawn(pythonCmd, args, { shell: true });
     let output = '';
     let error = '';
     
@@ -327,7 +331,8 @@ function mergeFiles(inputPaths, outputPath, outputFormat, options) {
       '--pages-per-sheet', options?.pagesPerSheet || '1'
     ];
     
-    const python = spawn('python', args, { shell: true });
+    const pythonCmd = process.env.PYTHON_PATH || 'python';
+    const python = spawn(pythonCmd, args, { shell: true });
     let output = '';
     let error = '';
     
@@ -357,6 +362,11 @@ app.use((err, req, res, next) => {
     success: false,
     error: err.message || 'Internal server error'
   });
+});
+
+// Catch-all route to serve the React app
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
 });
 
 // Start server

@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+uploads/*
+!uploads/.gitkeep
+outputs/*
+!outputs/.gitkeep
+venv
+.env
+__pycache__
+*.pyc
+frontend/node_modules
+frontend/dist
+.git
