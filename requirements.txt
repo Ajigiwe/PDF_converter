@@ -1,0 +1,7 @@
+PyPDF2
+reportlab
+python-docx
+pdf2image
+Pillow
+markdown
+pdfminer.six
