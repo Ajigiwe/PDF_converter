@@ -1,5 +1,5 @@
 # Base image with Node and Python
-FROM node:18-slim
+FROM node:20-slim
 
 # Install Python and dependencies for PDF processing
 RUN apt-get update && apt-get install -y \
